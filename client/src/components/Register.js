@@ -1,75 +1,89 @@
-import { useState } from "react"
-import React from 'react'
+import axios from "axios";
+import React from "react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+
+
 
 const Register = () => {
 
+  const [inputs, setInputs] = useState({
+            rollno: "",
+            sname: "",
+            dob: "",
+            email: "",
+            cid: "",
+            pno: ""
+  });
+  const [err,setError] = useState(null)
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+     await axios.post("/add", inputs);
+    
+      navigate("/");
+    } catch (err) {
+
+      setError(err.response.data)
+    }
+  };
 
      
     
-        const [inpval, setINP] = useState({
-            name: "",
-            email: "",
-            age: "",
-            mobile: "",
-            work: "",
-            add: "",
-            desc: ""
-        })
-    
-        const setdata = (e) => {
-            console.log(e.target.value);
-            const { name, value } = e.target;
-            setINP((preval) => {
-                return {
-                    ...preval,
-                    [name]: value
-                }
-            })
-        }
-    
+   
 
 
         
   return (
     <div>
       <form>
-  <div class="form-group">
-    <label for="id">ID</label>
-    <input type="number" value={inpval.id} onChange={setdata} name="id" class="form-control"  placeholder="Enter id" />
+  <div className="form-group">
+    <label htmlFor="rollno">ID</label>
+    <input type="number"     onChange={handleChange} name="rollno" className="form-control"   placeholder="Enter id" />
   
   </div>
   
-  <div class="form-group">
-    <label for="name">Student_name</label>
-    <input type="text" value={inpval.name} onChange={setdata} name="name" class="form-control"  placeholder="Enter name" />
-  
-  </div>
-
-  <div class="form-group">
-    <label for="dob">DOB</label>
-    <input type="number" value={inpval.dob} onChange={setdata} name="dob" class="form-control"  placeholder="Enter dob" />
+  <div className="form-group">
+    <label htmlFor="sname">Student_name</label>
+    <input type="string"  onChange={handleChange} name="sname" className="form-control"  placeholder="Enter name" />
   
   </div>
 
-  <div class="form-group">
-    <label for="email">EMAIL</label>
-    <input type="text" value={inpval.email} onChange={setdata} name="email" class="form-control"  placeholder="Enter email" />
+  <div className="form-group">
+    <label htmlFor="dob">DOB</label>
+    <input type="date"  onChange={handleChange} name="dob" className="form-control"  placeholder="Enter dob" />
   
   </div>
 
-  <div class="form-group">
-    <label for="courseid">COURSEID</label>
-    <input type="number" value={inpval.courseid} onChange={setdata} name="courseid"  class="form-control"  placeholder="Enter courseid" />
+  <div className="form-group">
+    <label htmlFor="email">EMAIL</label>
+    <input type="string"  onChange={handleChange} name="email" className="form-control"  placeholder="Enter email" />
   
   </div>
 
-  <div class="form-group">
-    <label for="phonenumber">PHONENUMBER</label>
-    <input type="number" value={inpval.phonenumber} onChange={setdata} name="phonenumber" class="form-control"  placeholder="Enter phonenumber" />
+  <div className="form-group">
+    <label htmlFor="cid">COURSEID</label>
+    <input type="string" onChange={handleChange} name="cid"  className="form-control"  placeholder="Enter courseid" />
+  
+  </div>
+
+  <div className="form-group">
+    <label htmlFor="pno">PHONENUMBER</label>
+    <input type="number"  onChange={handleChange} name="pno" className="form-control"  placeholder="Enter phonenumber" />
   
   </div>
   
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" className="btn btn-primary" onSubmit={handleSubmit} >Submit</button>
+      {err && "Something went wrong!"}
+      <Link to="/Home">See all students</Link>
 </form>
     </div>
   )
