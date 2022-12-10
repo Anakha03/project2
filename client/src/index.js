@@ -12,6 +12,7 @@ import Register from './components/Register';
 import View from './components/view';
 import Edit from './components/edit';
 //import ContextProvider from "./components/context/ContextProvider";
+import Viewatt from './components/viewatt';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -24,6 +25,7 @@ root.render(
       <Route path='/components/Register'element={<Register/>}/>
       <Route path='/view'element={<View/>}/>
       <Route path='/Edit'element={<Edit/>}/>
+         <Route path='/viewatt'element={<Viewatt/>}/>
 
 
     </Routes>
